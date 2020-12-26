@@ -17,7 +17,7 @@ app.use(express.static('public'))
 app.get('/', (request, response) => {
 
 })
-//create route for chat rooms, first argument is the route, second argument is a callback function which takes two parameters, request and response  
+//create route for chat rooms, first argument is the route, second argument is a callback function which takes two parameters, request and response
 app.get('/:room', (request, response) => {
 
 })
