@@ -31,9 +31,12 @@ app.get('/:room', (request, response) => {
 //handle on server with socket.io; this wil run anytime someone connects to the application. The on method takes two arguments: 1. name of the event to handle; 2. callback function to fire on event
 io.on('connection', socket => {
   //set up events to listen to
-  //Event 1: someone connects to a room; using on method with arguments: 1. whenever someone joins a rookm, 'join-room' 2.pass in two parameters (roomId and userId) to callback function 
+  //Event 1: someone connects to a room; using on method with arguments: 1. whenever someone joins a room, 'join-room' 2.fire callback fucntion with two parameters (roomId and userId) to A: join the specific room B: send boradcast message (message sent to all other users in the room but not sent back to client) to specific room (roomId)
   socket.on('join-room', (roomId, userId) => {
     console.log(roomId, userId)
+    //A: join ther specific room (roomId)
+    socket.join(roomId)
+    socket.to(roomId).broadcast.emit('user-connected', userId)
   })
 
 })
