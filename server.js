@@ -8,16 +8,21 @@ const server = require('http').Server(app)
 const io = require('socket.io')(server)
 //specify which port to start up the server on (port 3000; aka localhost)
 server.listen(3000)
-
+//line 21 - 22
+const { v4: uuidV4 } = require('uuid')
 //set up the express server for (first argument) the view engine and (second argument) how the views are going to be rendered 
 app.set('view engine', 'ejs')
 //set up the static/public folder. 
 app.use(express.static('public'))
 //create route for getting root/home, first argument is the route, second argument is a callback function which takes two parameteres, request and response.
 app.get('/', (request, response) => {
-
+  //redirect user to dynamic room, line 24
+  // response.redirect(`/${roomId}`)
+  // instead of passing roomId, call the uuidV4 function (declared in line 12) to get a dynamic url; e.g: http://localhost:3000/0e5ce052-8b71-4f7a-a397-f17c3e7d6971
+  response.redirect(`/${uuidV4()}`)
 })
 //create route for chat rooms, first argument is the route, second argument is a callback function which takes two parameters, request and response
 app.get('/:room', (request, response) => {
-
+  //render room from room route/ parameter (first argument) and pass down room id (second argument)
+  response.render(':/room', { roomId: request.params.room })
 })
