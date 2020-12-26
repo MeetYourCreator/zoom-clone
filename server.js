@@ -25,5 +25,5 @@ app.get('/', (request, response) => {
 //create route for chat rooms, first argument is the route, second argument is a callback function which takes two parameters, request and response
 app.get('/:room', (request, response) => {
   //render room from room route/ parameter (first argument) and pass down room id (second argument)
-  response.render(':/room', { roomId: request.params.room })
+  response.render('room', { roomId: request.params.room })
 })
