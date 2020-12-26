@@ -4,7 +4,22 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Video Chat Application</title>
+  <style>
+  
+    #video-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, 400);
+      grid-auto-rows: 400px;
+    }
 
+    video {
+      width: 100%;
+      height: 100%;
+      /* account for aspect-ratios */
+      object-fit: cover;
+    }
+  
+  </style>
 </head>
 <body>
   <div id='video-grid'></div>
