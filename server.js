@@ -3,7 +3,7 @@ const express = require('express')
 //create app variable initialized with running the expresss function; the app variable is initialized as the express function
 const app = express()
 //instantiate a Server based on ExpressJS and pass it the app variable. This creates a server to be used with socket.io
-const server = require('http').Server(app)
+const server = require('http').createServer(app)
 //import socket.io and pass it the server variable. This way socket.io knows which server is being used and how to interact with that server.
 const io = require('socket.io')(server)
 //specify which port to start up the server on (port 3000)
