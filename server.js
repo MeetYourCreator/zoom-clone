@@ -20,6 +20,7 @@ app.get('/', (request, response) => {
   // response.redirect(`/${roomId}`)
   // instead of passing roomId, call the uuidV4 function (declared in line 12) to get a dynamic url by appemnding a randfom uuid to localhost:3000, e.g: http://localhost:3000/0e5ce052-8b71-4f7a-a397-f17c3e7d6971
   response.redirect(`/${uuidV4()}`)
+  //Error: Failed to lookup view '/:room' in views directory. Resolve by createing views directory with a room.ejs file
 })
 //create route for chat rooms, first argument is the route, second argument is a callback function which takes two parameters, request and response
 app.get('/:room', (request, response) => {
