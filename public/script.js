@@ -21,6 +21,7 @@ socket.on('user-connected', userId => {
 
 const videoGrid = document.getElementById('video-grid')
 const newUserVideo = document.createElement('video')
+videoGrid.appendChild(newUserVideo)
 newUserVideo.muted = true
 navigator.mediaDevices.getUserMedia({
   video: true,
