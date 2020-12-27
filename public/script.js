@@ -18,3 +18,20 @@ peer.on('open', id => {
 socket.on('user-connected', userId => {
   console.log(`${userId} has joined the room`)
 })
+
+const videoGrid = document.getElementById('video-grid')
+const newUserVideo = document.createElement('video')
+newUserVideo.muted = true
+navigator.mediaDevices.getUserMedia({
+  video: true,
+  audio: true
+}).then(stream => {
+  addVideoStream(newUserVideo, stream)
+})
+
+const addVideoStream = (video, stream) => {
+  video.srcObject = stream
+  video.addEventListener('loadedmetadata', () => {
+    video.play()
+  })
+}
