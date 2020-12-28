@@ -21,14 +21,14 @@ socket.on('user-connected', userId => {
 
 //render video to DOM
 const videoGrid = document.getElementById('video-grid')
-const newUserVideo = document.createElement('video')
-videoGrid.appendChild(newUserVideo)
-newUserVideo.muted = true
+const userVideo = document.createElement('video')
+videoGrid.appendChild(userVideo)
+userVideo.muted = true
 navigator.mediaDevices.getUserMedia({
   video: true,
   audio: true
 }).then(stream => {
-  addVideoStream(newUserVideo, stream)
+  addVideoStream(userVideo, stream)
 })
 
 const addVideoStream = (video, stream) => {
