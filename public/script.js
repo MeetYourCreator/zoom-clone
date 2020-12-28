@@ -21,7 +21,6 @@ socket.on('user-connected', userId => {
 
 //render userVideo to DOM
 const renderUserVideo = () => {
-  
   const videoGrid = document.getElementById('video-grid')
   const userVideo = document.createElement('video')
   videoGrid.appendChild(userVideo)
@@ -32,7 +31,6 @@ const renderUserVideo = () => {
   }).then(userStream => {
     addVideoStream(userVideo, userStream)
   })
-
   const addVideoStream = (userVideo, userStream) => {
     userVideo.srcObject = userStream
     userVideo.addEventListener('loadedmetadata', () => {
