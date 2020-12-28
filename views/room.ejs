@@ -15,10 +15,14 @@
     <script defer src="/socket.io/socket.io.js"></script>
     <script defer src="script.js"></script>
     <style>
+     body {
+      background-color: rgb(24, 24, 24);
+     }
       #video-grid {
         display: grid;
         grid-template-columns: repeat(auto-fill, 300);
         grid-auto-rows: 300px;
+        border: 10px solid grey;
       }
 
       video {
@@ -26,6 +30,7 @@
         height: 100%;
         /* account for aspect-ratios */
         object-fit: cover;
+        border: 2px solid red;
       }
     </style>
     <title>Video Chat Application</title>
