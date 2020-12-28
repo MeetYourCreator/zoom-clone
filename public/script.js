@@ -20,21 +20,25 @@ socket.on('user-connected', userId => {
 })
 
 //render userVideo to DOM
-
-const videoGrid = document.getElementById('video-grid')
-const userVideo = document.createElement('video')
-videoGrid.appendChild(userVideo)
-userVideo.muted = true
-navigator.mediaDevices.getUserMedia({
-  video: true,
-  audio: true
-}).then(userStream => {
-  addVideoStream(userVideo, userStream)
-})
-
-const addVideoStream = (userVideo, userStream) => {
-  userVideo.srcObject = userStream
-  userVideo.addEventListener('loadedmetadata', () => {
-    userVideo.play()
+const renderUserVideo = () => {
+  
+  const videoGrid = document.getElementById('video-grid')
+  const userVideo = document.createElement('video')
+  videoGrid.appendChild(userVideo)
+  userVideo.muted = true
+  navigator.mediaDevices.getUserMedia({
+    video: true,
+    audio: true
+  }).then(userStream => {
+    addVideoStream(userVideo, userStream)
   })
+
+  const addVideoStream = (userVideo, userStream) => {
+    userVideo.srcObject = userStream
+    userVideo.addEventListener('loadedmetadata', () => {
+      userVideo.play()
+    })
+  }
 }
+
+renderUserVideo()
