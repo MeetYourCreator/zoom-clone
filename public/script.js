@@ -8,13 +8,13 @@ const peer = new Peer(undefined, {
 })
 
 //as soon as there is a connection made to the Peer Server, fire the callback function to pass in the new userId
-peer.on('open', id => {
+peer.on('open', newUserid => {
   //pass three arguments to an instance of EventEmitter to the back-end using socket.io: 
   //1. the 'join-room' event from server.js, line 32 
   //2. the room_id variable from room.ejs, line 7
   //3. the new userId
   //In other words, when a new user has joined the room, get the roomID from server.js, line 32 via the room_id variable from room.ejs, line 7 and pass in the id of the new user 
-  socket.emit('join-room', room_id, id)
+  socket.emit('join-room', room_id, newUserid)
 })
 
 //listen for new user connecting; on new 'user-connected' fire up callback function which console's thast the the new user (userId) hads connected.
