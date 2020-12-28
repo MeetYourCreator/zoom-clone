@@ -19,6 +19,7 @@ socket.on('user-connected', userId => {
   console.log(`${userId} has joined the room`)
 })
 
+//render video to DOM
 const videoGrid = document.getElementById('video-grid')
 const newUserVideo = document.createElement('video')
 videoGrid.appendChild(newUserVideo)
