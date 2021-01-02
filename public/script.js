@@ -18,8 +18,7 @@ peer.on('open', newUserId => {
   //In other words, when a new user has joined the room, get the roomId from server.js, line 32 via the room_id variable from room.ejs, line 7 and pass in the id of the new user 
   socket.emit('join-room', room_id, newUserId)
 })
-
-//listen for user connecting; on 'user-connected' fire up callback function which alerts that the user (userId) has connected.
+//listen for new user connecting; on new 'user-connected' fire up callback function which console's thast the the new user (userId) hads connected.
 socket.on('user-connected', userId => {
   alert(`${userId} has joined the room`)
 })

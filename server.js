@@ -1,7 +1,6 @@
 const chalk = require('chalk')
 const error = chalk.bold.red
 
-
 //create an express server
 const express = require('express')
 //create app variable initialized with running the expresss function; the app variable is initialized as the express function
