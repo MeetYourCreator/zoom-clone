@@ -13,7 +13,6 @@ peer.on('open', id => {
   socket.emit('join-room', room_id, id)
 })
 
-
 //listen for new user connecting; on mnew 'user-connected' fire up callback function which console's thast the the new user (userId) hads connected.
 socket.on('user-connected', userId => {
   console.log(`${userId} has joined the room`)
