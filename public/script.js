@@ -12,7 +12,6 @@ peer.on('open', id => {
   //pass three arguments to an instance of EventEmitter to the back-end using socket.io: 1. when a new user has 'joined-room' server.js, line 35 2. get the roomID from server.js, line 28 via the romm_id variable from room.ejs, line 7 3. pass in the id of the new user 
   socket.emit('join-room', room_id, id)
 })
-
 //listen for new user connecting; on mnew 'user-connected' fire up callback function which console's thast the the new user (userId) hads connected.
 socket.on('user-connected', userId => {
   console.log(`${userId} has joined the room`)
