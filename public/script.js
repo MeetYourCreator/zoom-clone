@@ -39,6 +39,7 @@ const renderUserVideo = () => {
     userVideo.srcObject = userStream
     userVideo.addEventListener('loadedmetadata', () => {
       userVideo.play()
+      videoGrid.append(userVideo)
     })
   }
 }
