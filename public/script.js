@@ -18,14 +18,13 @@ peer.on('open', newUserId => {
   //In other words, when a new user has joined the room, get the roomId from server.js, line 32 via the room_id variable from room.ejs, line 7 and pass in the id of the new user 
   socket.emit('join-room', room_id, newUserId)
 })
-//listen for new user connecting; on new 'user-connected' fire up callback function which console's thast the the new user (userId) hads connected.
-socket.on('user-connected', userId => {
-  alert(`${userId} has joined the room`)
-})
 
+
+
+
+const videoGrid = document.getElementById('video-grid')
 //render userVideo to DOM
 const renderUserVideo = () => {
-  const videoGrid = document.getElementById('video-grid')
   const userVideo = document.createElement('video')
     videoGrid.appendChild(userVideo)
     userVideo.muted = true
@@ -33,15 +32,40 @@ const renderUserVideo = () => {
       video: true,
       audio: true
     }).then(userStream => {
-    addVideoStream(userVideo, userStream)
+      addVideoStream(userVideo, userStream)
+
+      peer.on('call', call => {
+        call.answer(userStream)
+      })
+
+      //listen for new user connecting; on new 'user-connected' fire up callback function which console's thast the the new user (userId) hads connected.
+      //allow ourselves toi be connected to by other users
+      socket.on('user-connected', userId => {
+        alert(`${userId} has joined the room`)
+        connectToNewUser(userId, userStream)
+      })
+      
     })
-  const addVideoStream = (userVideo, userStream) => {
-    userVideo.srcObject = userStream
-    userVideo.addEventListener('loadedmetadata', () => {
-      userVideo.play()
-      videoGrid.append(userVideo)
-    })
-  }
+  
 }
 
 renderUserVideo()
+
+const addVideoStream = (userVideo, userStream) => {
+  userVideo.srcObject = userStream
+  userVideo.addEventListener('loadedmetadata', () => {
+    userVideo.play()
+    videoGrid.append(userVideo)
+  })
+}
+
+const connectToNewUser = (userId, stream) => {
+  const call = peer.call(userId, stream)
+  const newUserVideo = document.createElement('video')
+  call.on('stream', newUserVideoStream => {
+    addVideoStream(newUserVideo, newUserVideoStream)
+  })
+  call.on('close', () => {
+    newUserVideo.remove()
+  })
+}
