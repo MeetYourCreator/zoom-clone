@@ -19,14 +19,12 @@ peer.on('open', newUserId => {
   socket.emit('join-room', room_id, newUserId)
 })
 
-
-
-
 const videoGrid = document.getElementById('video-grid')
+
 //render userVideo to DOM
 const renderUserVideo = () => {
   const userVideo = document.createElement('video')
-    videoGrid.appendChild(userVideo)
+    // videoGrid.appendChild(userVideo)
     userVideo.muted = true
     navigator.mediaDevices.getUserMedia({
       video: true,
@@ -36,7 +34,13 @@ const renderUserVideo = () => {
 
       peer.on('call', call => {
         call.answer(userStream)
+        const newUserVideo = document.createElement('video')
+        call.on('stream', newUserVideoStream => {
+        addVideoStream(newUserVideo, newUserVideoStream)
+        })
       })
+
+      
 
       //listen for new user connecting; on new 'user-connected' fire up callback function which console's thast the the new user (userId) hads connected.
       //allow ourselves toi be connected to by other users
