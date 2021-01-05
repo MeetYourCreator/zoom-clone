@@ -40,9 +40,8 @@ const renderUserVideo = () => {
         })
       })
 
-
       //listen for new user connecting; on new 'user-connected' fire up callback function which console's thast the the new user (userId) hads connected.
-      //allow ourselves toi be connected to by other users
+      //allow ourselves to be connected to by other users
       socket.on('user-connected', userId => {
         alert(`${userId} has joined the room`)
         connectToNewUser(userId, userStream)
