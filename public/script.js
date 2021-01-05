@@ -57,7 +57,7 @@ const addVideoStream = (userVideo, stream) => {
   userVideo.srcObject = stream
   userVideo.addEventListener('loadedmetadata', () => {
     userVideo.play()
-    videoGrid.appendChild(userVideo)
+    videoGrid.append(userVideo)
   })
 }
 
