@@ -35,8 +35,8 @@ const renderUserVideo = () => {
       peer.on('call', call => {
         call.answer(stream)
         const userVideo = document.createElement('video')
-        call.on('stream', userStream => {
-        addVideoStream(userVideo, userStream)
+        call.on('stream', remoteStream => {
+        addVideoStream(userVideo, remoteStream)
         })
       })
 
@@ -44,7 +44,7 @@ const renderUserVideo = () => {
       //allow ourselves to be connected to by other users
       socket.on('user-connected', userId => {
         alert(`${userId} has joined the room`)
-        connectToNewUser(userId, userStream)
+        connectToNewUser(userId, stream)
       })
       
     })
