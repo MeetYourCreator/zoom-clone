@@ -29,14 +29,14 @@ const renderUserVideo = () => {
     navigator.mediaDevices.getUserMedia({
       video: true,
       audio: true
-    }).then(userStream => {
-      addVideoStream(userVideo, userStream)
+    }).then(stream => {
+      addVideoStream(userVideo, stream)
 
       peer.on('call', call => {
-        call.answer(userStream)
-        const newUserVideo = document.createElement('video')
-        call.on('stream', newUserVideoStream => {
-        addVideoStream(newUserVideo, newUserVideoStream)
+        call.answer(stream)
+        const userVideo = document.createElement('video')
+        call.on('stream', userStream => {
+        addVideoStream(userVideo, userStream)
         })
       })
 
@@ -53,8 +53,8 @@ const renderUserVideo = () => {
 
 renderUserVideo()
 
-const addVideoStream = (userVideo, userStream) => {
-  userVideo.srcObject = userStream
+const addVideoStream = (userVideo, stream) => {
+  userVideo.srcObject = stream
   userVideo.addEventListener('loadedmetadata', () => {
     userVideo.play()
     videoGrid.appendChild(userVideo)
