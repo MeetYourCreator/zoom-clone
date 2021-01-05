@@ -40,7 +40,6 @@ const renderUserVideo = () => {
         })
       })
 
-      
 
       //listen for new user connecting; on new 'user-connected' fire up callback function which console's thast the the new user (userId) hads connected.
       //allow ourselves toi be connected to by other users
@@ -59,7 +58,7 @@ const addVideoStream = (userVideo, userStream) => {
   userVideo.srcObject = userStream
   userVideo.addEventListener('loadedmetadata', () => {
     userVideo.play()
-    videoGrid.append(userVideo)
+    videoGrid.appendChild(userVideo)
   })
 }
 
