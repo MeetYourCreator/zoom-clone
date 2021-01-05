@@ -9,6 +9,10 @@ const peer = new Peer(undefined, {
   port: '3001'
 })
 
+const videoGrid = document.getElementById('video-grid')
+const userVideo = document.createElement('video')
+userVideo.muted = true
+
 //as soon as there is a connection made to the Peer Server, fire the callback function to pass in the new userId
 peer.on('open', newUserId => {
   //pass three arguments to an instance of EventEmitter to the back-end using socket.io: 
@@ -19,39 +23,25 @@ peer.on('open', newUserId => {
   socket.emit('join-room', room_id, newUserId)
 })
 
-const videoGrid = document.getElementById('video-grid')
-
-//render userVideo to DOM
-const renderUserVideo = () => {
-  const userVideo = document.createElement('video')
-    // videoGrid.appendChild(userVideo)
-    userVideo.muted = true
-    navigator.mediaDevices.getUserMedia({
-      video: true,
-      audio: true
-    }).then(stream => {
-      addVideoStream(userVideo, stream)
-
-      peer.on('call', call => {
-        call.answer(stream)
-        const userVideo = document.createElement('video')
-        call.on('stream', remoteStream => {
-        addVideoStream(userVideo, remoteStream)
-        })
-      })
-
-      //listen for new user connecting; on new 'user-connected' fire up callback function which console's thast the the new user (userId) hads connected.
-      //allow ourselves to be connected to by other users
-      socket.on('user-connected', userId => {
-        alert(`${userId} has joined the room`)
-        connectToNewUser(userId, stream)
-      })
-      
+navigator.mediaDevices.getUserMedia({
+  video: true,
+  audio: true
+}).then(stream => {
+  addVideoStream(userVideo, stream)
+  peer.on('call', call => {
+    call.answer(stream)
+    const userVideo = document.createElement('video')
+    call.on('stream', remoteStream => {
+      addVideoStream(userVideo, remoteStream)
     })
-  
-}
-
-renderUserVideo()
+  })
+  //listen for new user connecting; on new 'user-connected' fire up callback function which console's thast the the new user (userId) hads connected.
+  //allow ourselves to be connected to by other users
+  socket.on('user-connected', userId => {
+    connectToNewUser(userId, stream)
+    alert(`${userId} has joined the room`)
+  })
+})
 
 const addVideoStream = (userVideo, stream) => {
   userVideo.srcObject = stream
