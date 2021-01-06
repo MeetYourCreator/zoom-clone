@@ -44,11 +44,17 @@ io.on('connection', socket => {
   //set up events to listen to
   //Event 1: someone connects to a room; using on method with arguments: 1. whenever someone joins a room, 'join-room' 2.fire callback fucntion with two parameters (roomId and userId) to A: join the specific room B: send boradcast message (message sent to all other users in the room but not sent back to client) to specific room (roomId)
   socket.on('join-room', (roomId, userId) => {
-    console.log(chalk.bold.blue(roomId))
-    console.log(chalk.yellow(userId))
+    console.log(chalk.bold.blue(`Room ID: ${roomId}`))
+    console.log(chalk.yellow(`User ID: ${userId}`))
+    console.log(chalk.magenta(`USER ${userId} has joined ROOM ${roomId}`))
     //A: join ther specific room (roomId)
     socket.join(roomId)
     socket.to(roomId).broadcast.emit('user-connected', userId)
+
+    //user disconnects from the video chat room
+    socket.on('disconnect', () => {
+      socket.to(roomId).broadcast.emit('user-disconnected', userId)
+    })
   })
 
 })

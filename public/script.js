@@ -45,6 +45,11 @@ const renderVideo = () => {
     })
   })
 
+  //listen for user disconnecting from room
+  socket.on('user-disconnected', userId => {
+    console.log(`User disconnected: ${userId}`)
+  }) 
+  
   const addVideoStream = (userVideo, stream) => {
     userVideo.srcObject = stream
     userVideo.addEventListener('loadedmetadata', () => {
