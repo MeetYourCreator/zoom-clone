@@ -9,6 +9,7 @@ const peer = new Peer(undefined, {
   port: '3001'
 })
 
+const peers = {}
 const renderVideo = () => {
 
   const videoGrid = document.getElementById('video-grid')
@@ -47,9 +48,12 @@ const renderVideo = () => {
 
   //listen for user disconnecting from room
   socket.on('user-disconnected', userId => {
-    console.log(`User disconnected: ${userId}`)
+    if (peers[userId]) {
+      alert(`User disconnected: ${userId}`)
+      peers[userId].close()
+    }
   }) 
-  
+
   const addVideoStream = (userVideo, stream) => {
     userVideo.srcObject = stream
     userVideo.addEventListener('loadedmetadata', () => {
@@ -67,6 +71,8 @@ const renderVideo = () => {
     call.on('close', () => {
       newUserVideo.remove()
     })
+    //link every userId to a call
+    peers[userId] = call
   }
 }
 
