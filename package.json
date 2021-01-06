@@ -4,7 +4,12 @@
   "description": "Video calling platform using NodeJS, ExpressJS EJS, and Websocket.io",
   "main": "index.js",
   "scripts": {
-    "devStart": "nodemon server.js"
+    "devStart": "nodemon server.js",
+    "start": "node server.js"
+  },
+  "engines": {
+    "node": "12.16.1",
+    "npm": "6.14.10"
   },
   "repository": {
     "type": "git",

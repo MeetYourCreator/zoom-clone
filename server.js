@@ -14,7 +14,8 @@ const server = require('http').createServer(app)
 const io = require('socket.io')(server)
 
 //specify which port to start up the server on (port 3000)
-server.listen(3000)
+const PORT = process.env.PORT
+server.listen(PORT)
 
 //line 21 - 22
 const { v4: uuidV4 } = require('uuid')
