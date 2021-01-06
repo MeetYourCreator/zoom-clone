@@ -10,6 +10,7 @@ const peer = new Peer(undefined, {
 })
 
 const peers = {}
+
 const renderVideo = () => {
 
   const videoGrid = document.getElementById('video-grid')
@@ -52,7 +53,7 @@ const renderVideo = () => {
       alert(`User disconnected: ${userId}`)
       peers[userId].close()
     }
-  }) 
+  })
 
   const addVideoStream = (userVideo, stream) => {
     userVideo.srcObject = stream
