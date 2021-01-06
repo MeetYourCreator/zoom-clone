@@ -10,7 +10,7 @@ const peer = new Peer(undefined, {
 })
 
 const renderVideo = () => {
-  
+
   const videoGrid = document.getElementById('video-grid')
   const userVideo = document.createElement('video')
   userVideo.muted = true
@@ -37,7 +37,6 @@ const renderVideo = () => {
         addVideoStream(remoteVideo, remoteStream)
       })
     })
-
     //listen for new user connecting; on new 'user-connected' fire up callback function which console's thast the the new user (userId) hads connected.
     //allow ourselves to be connected to by other users
     socket.on('user-connected', userId => {
@@ -57,7 +56,6 @@ const renderVideo = () => {
   const connectToNewUser = (userId, stream) => {
     const call = peer.call(userId, stream)
     const newUserVideo = document.createElement('video')
-  
     call.on('stream', newUserVideoStream => {
       addVideoStream(newUserVideo, newUserVideoStream)
     })
