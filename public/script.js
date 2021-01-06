@@ -9,56 +9,62 @@ const peer = new Peer(undefined, {
   port: '3001'
 })
 
-const videoGrid = document.getElementById('video-grid')
-const userVideo = document.createElement('video')
-userVideo.muted = true
+const renderVideo = () => {
+  
+  const videoGrid = document.getElementById('video-grid')
+  const userVideo = document.createElement('video')
+  userVideo.muted = true
 
-//as soon as there is a connection made to the Peer Server, fire the callback function to pass in the new userId
-peer.on('open', newUserId => {
-  //pass three arguments to an instance of EventEmitter to the back-end using socket.io: 
-  //1. the 'join-room' event from server.js, line 32 
-  //2. the room_id variable from room.ejs, line 7
-  //3. the newUserId
-  //In other words, when a new user has joined the room, get the roomId from server.js, line 32 via the room_id variable from room.ejs, line 7 and pass in the id of the new user 
-  socket.emit('join-room', room_id, newUserId)
-})
+  //as soon as there is a connection made to the Peer Server, fire the callback function to pass in the new userId
+  peer.on('open', newUserId => {
+    //pass three arguments to an instance of EventEmitter to the back-end using socket.io: 
+    //1. the 'join-room' event from server.js, line 32 
+    //2. the room_id variable from room.ejs, line 7
+    //3. the newUserId
+    //In other words, when a new user has joined the room, get the roomId from server.js, line 32 via the room_id variable from room.ejs, line 7 and pass in the id of the new user 
+    socket.emit('join-room', room_id, newUserId)
+  })
 
-navigator.mediaDevices.getUserMedia({
-  video: true,
-  audio: true
-}).then(stream => {
-  addVideoStream(userVideo, stream)
-  peer.on('call', call => {
-    call.answer(stream)
-    const Video = document.createElement('video')
-    call.on('stream', remoteStream => {
-      addVideoStream(remoteVideo, remoteStream)
+  navigator.mediaDevices.getUserMedia({
+    video: true,
+    audio: true
+  }).then(stream => {
+    addVideoStream(userVideo, stream)
+    peer.on('call', call => {
+      call.answer(stream)
+      const remoteVideo = document.createElement('video')
+      call.on('stream', remoteStream => {
+        addVideoStream(remoteVideo, remoteStream)
+      })
+    })
+
+    //listen for new user connecting; on new 'user-connected' fire up callback function which console's thast the the new user (userId) hads connected.
+    //allow ourselves to be connected to by other users
+    socket.on('user-connected', userId => {
+      connectToNewUser(userId, stream)
+      alert(`${userId} has joined the room`)
     })
   })
-  //listen for new user connecting; on new 'user-connected' fire up callback function which console's thast the the new user (userId) hads connected.
-  //allow ourselves to be connected to by other users
-  socket.on('user-connected', userId => {
-    connectToNewUser(userId, stream)
-    alert(`${userId} has joined the room`)
-  })
-})
 
-const addVideoStream = (userVideo, stream) => {
-  userVideo.srcObject = stream
-  userVideo.addEventListener('loadedmetadata', () => {
-    userVideo.play()
-    videoGrid.append(userVideo)
-  })
-}
+  const addVideoStream = (userVideo, stream) => {
+    userVideo.srcObject = stream
+    userVideo.addEventListener('loadedmetadata', () => {
+      userVideo.play()
+      videoGrid.append(userVideo)
+    })
+  }
 
-const connectToNewUser = (userId, stream) => {
-  const call = peer.call(userId, stream)
-  const newUserVideo = document.createElement('video')
+  const connectToNewUser = (userId, stream) => {
+    const call = peer.call(userId, stream)
+    const newUserVideo = document.createElement('video')
   
-  call.on('stream', newUserVideoStream => {
-    addVideoStream(newUserVideo, newUserVideoStream)
-  })
-  call.on('close', () => {
-    newUserVideo.remove()
-  })
+    call.on('stream', newUserVideoStream => {
+      addVideoStream(newUserVideo, newUserVideoStream)
+    })
+    call.on('close', () => {
+      newUserVideo.remove()
+    })
+  }
 }
+
+renderVideo();
