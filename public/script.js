@@ -30,9 +30,9 @@ navigator.mediaDevices.getUserMedia({
   addVideoStream(userVideo, stream)
   peer.on('call', call => {
     call.answer(stream)
-    const userVideo = document.createElement('video')
+    const Video = document.createElement('video')
     call.on('stream', remoteStream => {
-      addVideoStream(userVideo, remoteStream)
+      addVideoStream(remoteVideo, remoteStream)
     })
   })
   //listen for new user connecting; on new 'user-connected' fire up callback function which console's thast the the new user (userId) hads connected.
@@ -54,6 +54,7 @@ const addVideoStream = (userVideo, stream) => {
 const connectToNewUser = (userId, stream) => {
   const call = peer.call(userId, stream)
   const newUserVideo = document.createElement('video')
+  
   call.on('stream', newUserVideoStream => {
     addVideoStream(newUserVideo, newUserVideoStream)
   })
