@@ -48,6 +48,7 @@ io.on('connection', socket => {
     console.log(chalk.bold.blue(`Room ID: ${roomId}`))
     console.log(chalk.yellow(`User ID: ${userId}`))
     console.log(chalk.magenta(`USER ${userId} has joined ROOM ${roomId}`))
+    
     //A: join ther specific room (roomId)
     socket.join(roomId)
     socket.to(roomId).broadcast.emit('user-connected', userId)
