@@ -18,6 +18,13 @@ const io = require('socket.io')(server)
 const port = process.env.PORT || 8000
 server.listen(port, () => console.log(chalk.bgRed(`server is running on port ${port}`)))
 
+if (process.env.PROD) {
+  app.use(express.static(path.join(__dirname, './client/build')))
+  app.get('*', (request, response) => {
+    response.sendFile(path.join(__dirname, './client/build/index.html'))
+  })
+}
+
 //line 21 - 22
 const { v4: uuidV4 } = require('uuid')
 
