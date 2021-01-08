@@ -1,3 +1,4 @@
+require('dotenv')
 const chalk = require('chalk')
 const error = chalk.bold.red
 
@@ -14,8 +15,8 @@ const server = require('http').createServer(app)
 const io = require('socket.io')(server)
 
 //specify which port to start up the server on (port 3000)
-const PORT = process.env.PORT
-server.listen(PORT)
+const port = process.env.PORT || 8000
+server.listen(port, () => console.log(chalk.bgRed(`server is running on port ${port}`)))
 
 //line 21 - 22
 const { v4: uuidV4 } = require('uuid')
