@@ -5,8 +5,7 @@
   "main": "index.js",
   "scripts": {
     "devStart": "nodemon server.js",
-    "start": "PROD=true node server.js",
-    "postinstall": "cd ./public && npm install"
+    "start": "PROD=true node server.js"
   },
   "engines": {
     "node": "12.16.1",
