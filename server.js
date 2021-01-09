@@ -1,4 +1,4 @@
-require('dotenv')
+
 const chalk = require('chalk')
 const error = chalk.bold.red
 
@@ -13,15 +13,15 @@ const server = require('http').createServer(app)
 
 //import socket.io and pass it the server variable. This way socket.io knows which server is being used and how to interact with that server.
 const io = require('socket.io')(server)
-
+const path = require('path')
 //specify which port to start up the server on (port 3000)
 const port = process.env.PORT || 8000
 server.listen(port, () => console.log(chalk.bgRed(`server is running on port ${port}`)))
 
 if (process.env.PROD) {
-  app.use(express.static(path.join(__dirname, './client/build')))
+  app.use(express.static(path.join(__dirname, './public/build')))
   app.get('*', (request, response) => {
-    response.sendFile(path.join(__dirname, './client/build/index.html'))
+    response.sendFile(path.join(__dirname, './public/build/index.html'))
   })
 }
 
