@@ -2,10 +2,10 @@
 const chalk = require('chalk')
 const error = chalk.bold.red
 
-//create an express server
+//import the express module
 const express = require('express')
 
-//create app variable initialized with running the expresss function; the app variable is initialized as the express function
+//initialize a variable called app with express
 const app = express()
 
 //instantiate a Server based on ExpressJS and pass it the app variable. This creates a server to be used with socket.io
