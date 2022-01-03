@@ -77,4 +77,4 @@ const renderVideo = () => {
   }
 }
 
-renderVideo();
+renderVideo()
