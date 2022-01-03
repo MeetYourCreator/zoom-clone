@@ -9,7 +9,7 @@ const peer = new Peer(undefined, {
   port: '3001'
 })
 
-const peers = {};
+const peers = {}
 
 const renderVideo = () => {
 
