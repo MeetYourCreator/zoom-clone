@@ -7,9 +7,9 @@ const socket = io('/')
 const peer = new Peer(undefined, {
   host: '/',
   port: '3001'
-})
+});
 
-const peers = {}
+const peers = {};
 
 const renderVideo = () => {
 
